@@ -106,7 +106,6 @@ export async function processReview(event: SlackEvent): Promise<void> {
           {
             type: 'text',
             text: REGULATION_PROMPT,
-            // @ts-expect-error cache_control is supported but not yet in SDK types
             cache_control: { type: 'ephemeral' },
           },
         ],
