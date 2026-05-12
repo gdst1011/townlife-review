@@ -1,0 +1,21 @@
+{
+  "name": "townlife-ad-review",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "15.3.2",
+    "@anthropic-ai/sdk": "^0.52.0",
+    "@slack/web-api": "^7.9.0",
+    "@vercel/functions": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.8.0"
+  }
+}
