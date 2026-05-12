@@ -7,14 +7,6 @@ export const runtime = 'nodejs';
 export async function POST(req: Request): Promise<Response> {
   const rawBody = await req.text();
 
-  // Slack署名検証
-  const timestamp = req.headers.get('x-slack-request-timestamp');
-  const signature = req.headers.get('x-slack-signature');
-
-  if (!verifySlackSignature(rawBody, timestamp, signature)) {
-    return new Response('Unauthorized', { status: 401 });
-  }
-
   let body: Record<string, unknown>;
   try {
     body = JSON.parse(rawBody);
@@ -25,6 +17,14 @@ export async function POST(req: Request): Promise<Response> {
   // URL Verification（Slack Events API登録時のchallenge確認）
   if (body.type === 'url_verification') {
     return Response.json({ challenge: body.challenge });
+  }
+
+  // Slack署名検証
+  const timestamp = req.headers.get('x-slack-request-timestamp');
+  const signature = req.headers.get('x-slack-signature');
+
+  if (!verifySlackSignature(rawBody, timestamp, signature)) {
+    return new Response('Unauthorized', { status: 401 });
   }
 
   // イベントコールバック以外は無視
