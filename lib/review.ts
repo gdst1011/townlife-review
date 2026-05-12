@@ -61,8 +61,10 @@ export async function processReview(event: SlackEvent): Promise<void> {
   // 対象チャンネル以外はスキップ
   if (event.channel !== TARGET_CHANNEL_ID) return;
 
-  // ボット自身の投稿やサブタイプ付きメッセージはスキップ
-  if (event.bot_id || event.subtype) return;
+  // ボット自身の投稿はスキップ
+  if (event.bot_id) return;
+  // file_share以外のサブタイプはスキップ
+  if (event.subtype && event.subtype !== 'file_share') return;
 
   const files = event.files?.filter(isSupportedImage) ?? [];
   if (files.length === 0) return;
